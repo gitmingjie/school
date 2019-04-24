@@ -1,0 +1,139 @@
+ <extend name="Public:Public" />
+ <block name="title">待审核列表</block>
+ <block name="body">
+ <script src="__PUBLIC__/Admin/include/js/jquery-1.10.2.min.js"></script>
+ <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 待审核列表 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    待审核列表
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    <!-- <a href="javascript:;" class="fa fa-times"></a> -->
+                 </span>
+                </header>
+                <div class="panel-body">
+                    <div class="dataTables_filter" id="editable-sample_filter">
+                        <form action="__MODULE__/inware">
+                            <label style="float:right"> 
+                                <input class="form-control medium" aria-controls="editable-sample" type="text" placeholder="货物名" name="gname" value="{$Think.get.gname}" style="float:left;width:150px">
+                                <input class="form-control medium" aria-controls="editable-sample" type="text" placeholder="货物编码" name="code" value="{$Think.get.code}" style="float:left;width:150px">
+                                <select name="status" style="height:33px">
+                                    <option value="2">货物类型</option>
+                                    <option value="0" <if condition="$operate eq 0"> selected </if>>正常</option>
+                                    <option value="1" <if condition="$operate eq 1"> selected </if>>退货</option>
+                                </select>
+                                <button class="btn btn-success" type="submit" style="float:right">搜索</button>
+                            </label>
+                        </form>
+                    </div>
+                    <table class="table table-hover general-table">
+                        
+                        <thead>
+                        <tr>
+                            <th>供应商</th>
+                            <th>货物名</th>
+                            <th>货物编码</th>
+                            <th>供应价</th>
+                            <th>供应数</th>
+                            <th>所在区</th>
+                            <th>负责人</th>
+                            <th>货物类型</th>
+                            <th>供应时间　<a href="__MODULE__/inware/index?order=in_time&asc=desc&{$where_str}"><span style="cursor:pointer"><i class="fa fa-long-arrow-down orderby"></i></span></a>  <a href="__MODULE__/inware/index?order=in_time&asc=asc&{$where_str}"><span style="cursor:pointer"><i class="fa fa-long-arrow-up"></i></span></a></th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                     <foreach name="list" item="row">
+                        <tr>
+                            <td>{$row['spname']}</td>
+                            <td>{$row['gname']}</td>
+                            <td>{$row[code]}</td>
+                            <td>{$row[in_price]}</td>
+                            <td>{$row[in_num]}</td>
+                            <td>{$row['zname']}</td>
+                            <td>{$row['admin_name']}</td>
+                            <td>{$status[$row['status']]}</td>
+                            <td>{$row['in_time']|date='Y-m-d H:i:s',###}</td>
+                            <td>
+                                 <button class="btn btn-default access" type="button" title="通过" value="{$row['in_id']}"> <i class="fa fa-check"></i></button>
+                                 <button class="btn btn-default rebut" type="button" title="驳回" value="{$row['in_id']}"> <i class="fa fa-times"></i></button>
+                                
+                            </td>
+                        </tr>
+                    </foreach>
+
+                        </tbody>
+                        
+                    </table>
+                    <div class="pages pull-right">{$page}<div/>
+                </div>
+            </section>
+        </div>
+       
+        <!--body wrapper end-->
+         <script type="text/javascript">
+            $(document).on('click','.access',function(){
+                var id=$(this).val();
+                // alert(spid);
+                var res = confirm('您确定审核通过入库？');
+                if(res){
+                     $.ajax({
+                        url:'__URL__/access',
+                        data:{id:id},
+                        type:'post',
+                        async:false,
+                        dataType:'Json',
+                        success:
+                            function($data){
+                                if($data == 1){
+                                    alert('入库成功');
+                                    location.reload();
+                                }else{
+                                    alert('入库失败');
+                                }
+                        }   
+                    })
+                }
+               
+            })
+            $(document).on('click','.rebut',function(){
+                var id=$(this).val();
+                // alert(spid);
+                var res = confirm('您确定审核不通过？');
+                if(res){
+                     $.ajax({
+                        url:'__URL__/rebut',
+                        data:{id:id},
+                        type:'post',
+                        async:false,
+                        dataType:'Json',
+                        success:
+                            function($data){
+                                if($data == 1){
+                                    alert('审核成功');
+                                    location.reload();
+                                }else{
+                                    alert('审核失败');
+                                }
+                        }   
+                    })
+                }
+               
+            })
+        </script>
+</block>

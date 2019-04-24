@@ -1,0 +1,103 @@
+ <extend name="Public:Public" />
+ <block name="title">客户列表</block>
+ <block name="body">
+ <script src="__PUBLIC__/Admin/include/js/jquery-1.10.2.min.js"></script>
+ <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 客户列表 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    客户列表
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    <!-- <a href="javascript:;" class="fa fa-times"></a> -->
+                 </span>
+                </header>
+                <div class="panel-body">
+                    <div class="dataTables_filter" id="editable-sample_filter">
+                        <form action="__MODULE__/Customer">
+                            <label style="float:right"> 
+                                <input class="form-control medium" aria-controls="editable-sample" type="text" placeholder="公司名" name="sname" value="{$Think.get.sname}" style="float:left;width:150px">
+                                <input class="form-control medium" aria-controls="editable-sample" type="text" placeholder="联系电话" name="sphone" value="{$Think.get.sphone}" style="float:left;width:150px">
+                                <button class="btn btn-success" type="submit" style="float:right">搜索</button>
+                            </label>
+                        </form>
+                    </div>
+                    <table class="table table-hover general-table">
+                        
+                        <thead>
+                        <tr>
+                            <th>公司名</th>
+                            <th>联系人</th>
+                            <th>电话</th>
+                            <th>所在地</th>
+                            <th>下单数　<a href="__MODULE__/Customer/index?order=scount&asc=desc&{$where_str}"><span style="cursor:pointer"><i class="fa fa-long-arrow-down orderby"></i></span></a>  <a href="__MODULE__/Customer/index?order=scount&asc=asc&{$where_str}"><span style="cursor:pointer"><i class="fa fa-long-arrow-up"></i></span></a></th>
+                            <th>备注</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                     <foreach name="list" item="row">
+                        <tr>
+                            <td>{$row['sname']}</td>
+                            <td>{$row['scon']}</td>
+                            <td>{$row[sphone]}</td>
+                            <td>{$row[saddress]}</td>
+                            <td>{$row[scount]}</td>
+                            <td>{$row['snote']}</td>
+                            <td>
+                                <a href="__URL__/editCustomer?sid={$row['sid']}"><button class="btn btn-default orderby" type="button" title="修改"> <i class="fa fa-pencil"></i></button></a>
+                                <button class="del btn btn-default" type="button" value="{$row['sid']}" title="删除"> <i class="fa fa-trash-o"></i> </button>
+                            </td>
+                        </tr>
+                    </foreach>
+
+                        </tbody>
+                        
+                    </table>
+                    <div class="pages pull-right">{$page}<div/>
+                </div>
+            </section>
+        </div>
+       
+        <!--body wrapper end-->
+         <script type="text/javascript">
+            $(document).on('click','.del',function(){
+                var sid=$(this).val();
+                // alert(spid);
+                var res = confirm('您确定删除该客户信息？');
+                if(res){
+                     $.ajax({
+                        url:'__URL__/delCustomer',
+                        data:{sid:sid},
+                        type:'post',
+                        async:false,
+                        dataType:'Json',
+                        success:
+                            function($data){
+                                if($data == 1){
+                                    alert('删除成功');
+                                    location.reload();
+                                }else{
+                                    alert('删除失败');
+                                }
+                        }   
+                    })
+                }
+               
+            })
+        </script>
+</block>

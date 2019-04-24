@@ -1,0 +1,60 @@
+ <extend name="Public:Public" />
+ <block name="title">登陆日志</block>
+ <block name="body">
+ <script src="__PUBLIC__/Admin/include/js/jquery-1.10.2.min.js"></script>
+ <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 登陆日志 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    登陆日志
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    <!-- <a href="javascript:;" class="fa fa-times"></a> -->
+                 </span>
+                </header>
+                <div class="panel-body">
+                   
+                    <table class="table table-hover general-table">
+                        
+                        <thead>
+                        <tr>
+                            <th>管理员名</th>
+                            <th>登录名</th>
+                            <th>登录时间</th>
+                            <th>登陆IP</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                     <foreach name="list" item="row">
+                        <tr>
+                            <td>{$row['admin_name']}</td>
+                            <td>{$row['pass_name']}</td>
+                            <td>{$row['last_time']|date='Y-m-d H:i:s',###}</td>
+                            <td>{$row[last_ip]}</td>
+                        </tr>
+                    </foreach>
+
+                        </tbody>
+                        
+                    </table>
+                    <div class="pages pull-right">{$page}<div/>
+                </div>
+            </section>
+        </div>
+       
+       
+</block>

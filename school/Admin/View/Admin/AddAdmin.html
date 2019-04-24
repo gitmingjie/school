@@ -1,0 +1,81 @@
+ <extend name="Public:Public" />
+ <block name="title">添加管理员</block>
+ <block name="body">
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 添加管理员 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+      
+    <div class="panel-body">
+        <form role="form" class="form-horizontal adminex-form" method="post" action="__URL__/addAdmin">
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label" style="float:left">管理员名字</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="admin_name" id="l-name" class="form-control" type="text">
+                    <p class="help-block">请输入管理员名字</p>
+                </div>
+            </div>
+            <div class="form-group has-error">
+                <label class="col-lg-2 control-label" style="float:left">手 机 号</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="admin_phone" id="l-name" class="form-control" type="text">
+                    <p class="help-block">请输入管理员联系方式</p>
+                </div>
+            </div>
+            <div class="form-group has-info">
+                <label class="col-lg-2 control-label" style="float:left">角 色</label>
+                <div class="col-lg-6">
+                    <select class="form-control m-bot15" name="posid">
+                        <foreach name="list" item="row">
+                            <option value="{$row['posid']}">{$row['upos']}</option>
+                        </foreach>
+                        
+                    </select>
+                    <p class="help-block">请选择管理员角色</p>
+                </div>
+            </div>
+           <div class="form-group has-success">
+                <label class="col-lg-2 control-label" style="float:left">登 陆 名</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="pass_name" id="l-name" class="form-control" type="text">
+                    <p class="help-block">请输入管理员登录名</p>
+                </div>
+            </div>
+            <div class="form-group has-warning">
+                <label class="col-lg-2 control-label" style="float:left">登录密码</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="password" id="l-name" class="form-control" type="text">
+                    <p class="help-block">请输入管理员登录密码</p>
+                </div>
+            </div>
+            <div class="form-group has-info">
+                <label class="col-lg-2 control-label" style="float:left">确认密码</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="repassword" id="l-name" class="form-control" type="text">
+                    <p class="help-block">请再次输入密码</p>
+                </div>
+            </div>
+            
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <button class="btn btn-success" type="submit">新增</button>
+                    <button class="btn btn-warning" type="reset">取消</button>
+                </div>
+            </div>
+        </form>
+    </div>
+       
+        <!--body wrapper end-->
+</block>

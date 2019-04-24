@@ -1,0 +1,102 @@
+ <extend name="Public:Public" />
+ <block name="title">订单详情列表</block>
+ <block name="body">
+ <script src="__PUBLIC__/Admin/include/js/jquery-1.10.2.min.js"></script>
+ <script language="javascript" type="text/javascript" src="__PUBLIC__/Admin/include/js/My97DatePicker/WdatePicker.js"></script>
+ <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 订单详情列表 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    订单详情列表
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    <!-- <a href="javascript:;" class="fa fa-times"></a> -->
+                 </span>
+                </header>
+                <div class="panel-body">
+                    <div class="dataTables_filter" id="editable-sample_filter">
+                        
+                    </div>
+                    <table class="table table-hover general-table">
+                        
+                        <thead>
+                        <tr>
+                            <th>供应商</th>
+                            <th>货物名</th>
+                            <th>订购数量</th>
+                            <th>总价</th>
+                            <th>发货状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                     <foreach name="list" item="row">
+                        <tr>
+                            <td>{$row['spname']}</td>
+                            <td>{$row['gname']}</td>
+                            <td>{$row['num']}</td>
+                            <td>{$row['price']}</td>
+                            <td>{$status[$row['status']]}</td>
+                            <td>
+                                <if condition="$row['status'] == 0 ">
+                                    <button class="btn btn-default truck" type="button" title="发货" value="{$row['order_goods_id']}"> <i class="fa fa-truck"></i></button>
+                                <else /> 
+                                    <button class="btn btn-default" type="button" title="发货"> 已发货</button>
+                                </if>
+                                 
+                                
+                            </td>
+                        </tr>
+                    </foreach>
+
+                        </tbody>
+                        
+                    </table>
+                    <div class="pages pull-right">{$page}<div/>
+                </div>
+            </section>
+        </div>
+       
+        <!--body wrapper end-->
+         <script type="text/javascript">
+            $(document).on('click','.truck',function(){
+                var id=$(this).val();
+                // alert(spid);
+                var res = confirm('您确定发货？');
+                if(res){
+                     $.ajax({
+                        url:'__URL__/truck',
+                        data:{id:id},
+                        type:'post',
+                        async:false,
+                        dataType:'Json',
+                        success:
+                            function($data){
+                                if($data == 1){
+                                    alert('发货成功');
+                                    location.reload();
+                                }else{
+                                    alert('发货失败');
+                                }
+                        }   
+                    })
+                }
+               
+            })
+            
+        </script>
+</block>

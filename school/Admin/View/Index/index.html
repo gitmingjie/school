@@ -1,0 +1,176 @@
+ <extend name="Public:Public" />
+ <block name="title">智能仓储管理系统</block>
+ <block name="body">
+ <meta charset="UTF-8">
+<!-- 百度地图 -->
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+    body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+</style>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4mZG45nzSOyYrb4UKIBNvFry"></script>
+<!-- 百度地图 -->
+
+        <!--body wrapper start-->
+        <body onLoad="autoadd()">
+       
+        <div class="panel-body invoice">
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                <h1 class="invoice-title" style="color:orange;font-size: 30px">欢迎进入智能仓储管理系统</h1>
+                    <h1 class="invoice-title">{$admin_info['admin_name']}</h1>
+                </div>
+                <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+                    <img class="inv-logo"  src="__PUBLIC__/Admin/include/images/invoice-logo.jpg" alt="">
+                <p style="font-size:15px;color:green"><strong>权      限：</strong>{$admin_info['upos']}</p>
+                <p style="font-size:15px;color:green"><strong>最后登录时间：</strong>{$end['last_time']|date='Y-m-d H:i:s',###}</p>
+                <p style="font-size:15px;color:green"><strong>最后登录IP：</strong>{$end['last_ip']}</p>
+                         <div id="m"></div>
+                    
+                    
+                </div>
+            </div>
+            <div class="alert alert-info fade in">
+                <button type="button" class="close close-sm" data-dismiss="alert">
+                    <!-- <i class="fa fa-times"></i> -->
+                </button>
+                <strong>当前位置</strong> 
+            </div>
+           <!--  <div class="invoice-address">
+                <div class="row">
+                    <div class="col-md-5 col-sm-5">
+                        <h4 class="inv-to">Invoice To</h4>
+                        <h2 class="corporate-id">Envato</h2>
+                        <p>
+                            <br>
+                            Victoria 3000 Australia<br>
+                            Phone: +61 3 8376 6284,
+                            Email : info@envato.com
+                        </p>
+
+                    </div>
+                    <div class="col-md-4 col-md-offset-3 col-sm-4 col-sm-offset-3">
+                        <div class="inv-col"><span>Invoice#</span> 432134-A</div>
+                        <div class="inv-col"><span>Invoice Date :</span> 22 March 2014</div>
+                        <h1 class="t-due">TOTAL DUE</h1>
+                        <h2 class="amnt-value">$ 3120.00</h2>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class=""> -->
+        <div class="invoice-address">
+        <div>
+                <div id="allmap" style="width:100%;height:300px;"></div>
+            </div>
+</div>
+        <!-- </div> -->
+        
+        <script type="text/javascript">
+        function getImg(val) {
+            var len=val.length;
+            var images="";
+            for (var i = 0; i < len; i++) {
+                var num=val.substr(i,1);
+                
+                switch(num){
+                    case '0' : 
+                        images += "<img style='width:20px;height:20px' src='__PUBLIC__/Admin/include/images/images/0.png' />";
+                    break;
+
+                    case '1' : 
+                        images += "<img style='width:20px;height:20px' src='__PUBLIC__/Admin/include/images/images/1.png' />";
+                    break;
+
+                    case '2': 
+                        images += "<img style='width:20px;height:20px' src='__PUBLIC__/Admin/include/images/images/2.png' />";
+                    break;
+
+                    case '3' : 
+                        images += "<img style='width:20px;height:20px' src='__PUBLIC__/Admin/include/images/images/3.png' />";
+                    break;
+
+                    case '4' : 
+                        images += "<img style='width:20px;height:20px' src='__PUBLIC__/Admin/include/images/images/4.png' />";
+                    break;
+
+                    case '5' : 
+                        images += "<img style='width:20px;height:20px' src='__PUBLIC__/Admin/include/images/images/5.png' />";
+                    break;
+
+                    case '6' : 
+                        images += "<img style='width:20px;height:20px' src='__PUBLIC__/Admin/include/images/images/6.png' />";
+                    break;
+
+                    case '7': 
+                        images += "<img style='width:20px;height:20px' src='__PUBLIC__/Admin/include/images/images/7.png' />";
+                    break;
+
+                    case '8': 
+                        images += "<img style='width:20px;height:20px' src='__PUBLIC__/Admin/include/images/images/8.png' />";
+                    break;
+
+                    case '9' : 
+                        images += "<img style='width:20px;height:20px' src='__PUBLIC__/Admin/include/images/images/9.png' />";
+                    break;
+
+
+                }
+            }
+            return images;
+
+        }
+
+        function times() {
+            var dv=document.getElementById('m');
+            var date=new Date();
+            var year=date.getFullYear()+"";
+            var months=date.getMonth()+1;
+            months=months<10?'0'+months:months+"";
+            var day =date.getDate();
+            day=day<10?'0'+day:day+"";
+            var hours=date.getHours();
+            hours=hours<10?'0'+hours:hours+"";
+            var minutes=date.getMinutes();
+            minutes=minutes<10?'0'+minutes:minutes+"";
+            var seconds=date.getSeconds();
+            seconds=seconds<10?'0'+seconds:seconds+"";
+            dv.innerHTML = getImg(year)+'年'+ getImg(months)+'月'+getImg(day)+'日' + getImg(hours)+'时'+ getImg(minutes)+'分'+ getImg(seconds)+'秒';
+
+        }
+
+
+        var interval=0;
+        function autoadd(){
+            clearInterval(interval);
+            interval=setInterval("times()",1000);
+        }
+        </script>
+        <script>
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");            
+    map.centerAndZoom("南阳",13);           
+    //单击获取点击的经纬度
+    map.addEventListener("click",function(e){
+         //alert(e.point.lng + "," + e.point.lat);
+        $("#lng").attr("value",e.point.lng);
+        $("#lat").attr("value",e.point.lat);
+      
+    });               
+    map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+    map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+
+    var point = new BMap.Point(112.559497,32.974002);
+    map.centerAndZoom(point, 15);
+    var marker = new BMap.Marker(point);  // 创建标注
+    map.addOverlay(marker);               // 将标注添加到地图中
+    marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+
+$(function(){
+    submitForm("#form1",'serialize','json',function(result){
+        if(result.status==1) redirect(result.data.url,1000);       
+        //mui.alert(result.message);
+    })
+})
+</script>   
+        <!--body wrapper end-->
+</block>

@@ -1,0 +1,76 @@
+
+ <extend name="Public:Public" />
+ <block name="title">修改供应商信息</block>
+ <block name="body">
+    <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 修改供应商信息 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+      
+    <div class="panel-body">
+        <form role="form" class="form-horizontal adminex-form" method="post" action="__URL__/editSupply">
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label" style="float:left">公 司 名</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="spname" id="l-name" class="form-control" type="text" value="{$list['spname']}" readonly>
+                    <!-- <p class="help-block">请输入供应商公司名称</p> -->
+                </div>
+            </div>
+            <div class="form-group has-info">
+                 <label class="col-lg-2 control-label" style="float:left">邮　　箱</label>
+                <div class="col-lg-6">
+                    <input placeholder="" name="spemail" id="email2" class="form-control" type="email" value="{$list['spemail']}" readonly>
+                    <!-- <p class="help-block">请输入供应商公司邮箱</p> -->
+                </div>
+            </div>
+            <div class="form-group has-default">
+                <label class="col-lg-2 control-label" style="float:left">联 系 人</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="spon" id="l-name" class="form-control" type="text" value="{$list['spon']}">
+                    <!-- <p class="help-block">请输入供应商公司联系人</p> -->
+                </div>
+            </div>
+            <div class="form-group has-error">
+                <label class="col-lg-2 control-label" style="float:left">手 机 号</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="spphone" id="l-name" class="form-control" type="text" value="{$list['spphone']}">
+                    <!-- <p class="help-block">请输入供应商公司联系方式</p> -->
+                </div>
+            </div>
+            <div class="form-group has-info">
+                 <label class="col-lg-2 control-label" style="float:left">所 在 地</label>
+                <div class="col-lg-6">
+                    <input placeholder="" name="spaddress" id="email2" class="form-control" type="text" value="{$list['spaddress']}">
+                    <!-- <p class="help-block">请输入供应商公司所在地</p> -->
+                </div>
+            </div>
+            <div class="form-group has-warning">
+                 <label class="col-lg-2 control-label" style="float:left">  备　注  </label>
+                <div class="col-lg-6">
+                    <textarea class="form-control " id="ccomment" name="spnote" required="">{$list['spnote']}</textarea>
+                    <!-- <p class="help-block">请输入备注</p> -->
+                </div>
+            </div>
+            <input type="hidden" name="spid" value="{$list['spid']}">
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <button class="btn btn-success" type="submit">修改</button>
+                    <!-- <button class="btn btn-warning" type="reset">取消</button> -->
+                </div>
+            </div>
+        </form>
+    </div>
+       
+        <!--body wrapper end-->
+</block>

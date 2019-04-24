@@ -1,0 +1,74 @@
+ <extend name="Public:Public" />
+ <block name="title">修改仓库信息</block>
+ <block name="body">
+    <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 修改仓库信息 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+      
+    <div class="panel-body">
+        <form role="form" class="form-horizontal adminex-form" method="post" action="__URL__/editWare">
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label" style="float:left">仓 库 名</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="wname" id="l-name" class="form-control" type="text" value="{$info['wname']}">
+                </div>
+            </div>
+            <div class="form-group has-info">
+                 <label class="col-lg-2 control-label" style="float:left">选择分类</label>
+                <div class="col-lg-6">
+                    <select class="form-control m-bot15" name="cid">
+                        <option value="">----请选择仓库类别---</option>
+                        <?php 
+                            foreach($allCate as $row){
+                                 $num = substr_count($row['pids'],',');
+                                  $nbsp = str_repeat('&nbsp;',($num-1)*4);
+                                  if($info['cid'] == $row['cid']){
+                                    echo '<option value="'.$row['cid'].'" selected>'.$nbsp.$row['cname'].'</option>';
+                                  }else{
+                                    echo '<option value="'.$row['cid'].'">'.$nbsp.$row['cname'].'</option>';
+                                  }
+                                  
+                            }
+                        ?>
+                    </select>
+                    <p class="help-block">请选择仓库类别</p>
+                </div>
+            </div>
+            <div class="form-group has-default">
+                <label class="col-lg-2 control-label" style="float:left">占地面积</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="warea" id="l-name" class="form-control" type="text" value="{$info['warea']}">
+                </div>
+            </div>
+            <div class="form-group has-error">
+                <label class="col-lg-2 control-label" style="float:left">分区数量</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="znum" id="l-name" class="form-control" type="text" value="{$info['znum']}">
+                </div>
+            </div>
+            
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <input type="hidden" name="wid" value="{$info['wid']}">
+                    <button class="btn btn-success" type="submit">修改</button>
+                    <button class="btn btn-warning" type="reset">取消</button>
+                </div>
+            </div>
+        </form>
+    </div>
+       
+        <!--body wrapper end-->
+</block>

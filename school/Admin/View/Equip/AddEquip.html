@@ -1,0 +1,95 @@
+ <extend name="Public:Public" />
+ <block name="title">添加新设备</block>
+ <block name="body">
+ <script src="__PUBLIC__/Admin/include/js/jquery-1.10.2.min.js"></script>
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 添加新设备 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+      
+    <div class="panel-body">
+        <form role="form" class="form-horizontal adminex-form" method="post" action="__URL__/addEquip">
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label" style="float:left">设备名</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="equip_name" id="l-name" class="form-control" type="text">
+                    <p class="help-block">请输入新设备名</p>
+                </div>
+            </div>
+            <div class="form-group has-error">
+                <label class="col-lg-2 control-label" style="float:left">仓库分区</label>
+                <div class="col-md-6">
+                    <div class="input-group input-large custom-date-range">
+                       <select class="ware form-control m-bot15">
+                        <option value="">请选择仓库</option>
+                        <foreach name="list" item="row">
+                            <option value="{$row['wid']}">{$row['wname']}</option>
+                        </foreach>
+                    </select>
+                        <span class="input-group-addon"><i class="fa fa-arrow-circle-right"></i></span>
+                       <select class="zone form-control m-bot15" name="zid">
+                        <option value="">请选择仓库分区</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group has-info">
+                 <label class="col-lg-2 control-label" style="float:left">绑定类型</label>
+                <div class="col-lg-6">
+                    <select class="form-control m-bot15" name="bind">
+                        <option value="">请选择绑定类型</option>
+                        <option value="temp">温度</option>
+                        <option value="humidness">湿度</option>
+                        <option value="smog">烟雾浓度</option>
+                        <option value="sun">光照强度</option>
+                    </select>
+                    <p class="help-block">请选择绑定类型</p>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <button class="btn btn-success" type="submit">新增</button>
+                    <button class="btn btn-warning" type="reset">取消</button>
+                </div>
+            </div>
+        </form>
+    </div>
+       <script type="text/javascript">
+             $(document).on('change',".ware",function(){
+                var wid = $(this).val();
+                 $.ajax({
+                    url:'__URL__/ajaxWare',
+                    data:{wid:wid},
+                    async:false,
+                    type:'post',
+                    dataType:'json',
+                    success:
+                    function(data){
+                        $('.zone').children().remove();
+                        $(".zone").append('<option value="">请选择仓库分区</option>');
+                        for(var i=0;i<data.length;i++){
+                            var info = '<option id="zone'+i+'" value="'+data[i].zid+'" style="width:348px;">'+data[i].zname+'</option>';
+                            $(".zone").append(info);
+                        }
+                    },
+                    error:
+                    function(){
+                        alert('响应失败');
+                    }
+                    })
+             })
+       </script>
+        <!--body wrapper end-->
+</block>

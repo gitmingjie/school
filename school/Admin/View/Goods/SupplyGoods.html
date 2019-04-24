@@ -1,0 +1,133 @@
+ <extend name="Public:Public" />
+ <block name="title">商户供货</block>
+ <block name="body">
+    <!-- page heading start-->
+    <script src="__PUBLIC__/Admin/include/js/jquery-1.10.2.min.js"></script>
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 商户供货 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+      
+    <div class="panel-body">
+        <form role="form" class="form-horizontal adminex-form" method="post" action="__URL__/supplyGoods">
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label" style="float:left">货 物 名</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="gname" id="l-name" class="form-control" type="text">
+                    <p class="help-block">请输入货物名称</p>
+                </div>
+            </div>
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label" style="float:left">货物编码</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="code" id="l-name" class="form-control" type="text">
+                    <p class="help-block">请输入货物编码</p>
+                </div>
+            </div>
+            <div class="form-group has-info">
+                 <label class="col-lg-2 control-label" style="float:left">供应数量</label>
+                <div class="col-lg-6">
+                    <input placeholder="" name="in_num" id="" class="form-control" type="number">
+                    <p class="help-block">请输入供应数量</p>
+                </div>
+            </div>
+            <div class="form-group has-info">
+                 <label class="col-lg-2 control-label" style="float:left">供应价格</label>
+                <div class="col-lg-6">
+                    <input placeholder="" name="in_price" id="" class="form-control" type="text">
+                    <p class="help-block">请输入供应价格(元)</p>
+                </div>
+            </div>
+            <div class="form-group has-info">
+                 <label class="col-lg-2 control-label" style="float:left">货物规格</label>
+                <div class="col-lg-6">
+                    <input placeholder="" name="area" id="" class="form-control" type="text">
+                    <p class="help-block">请输入单个货物规格大小(cm^3)</p>
+                </div>
+            </div>
+           <div class="form-group has-info">
+                 <label class="col-lg-2 control-label" style="float:left">供 应 商</label>
+                <div class="col-lg-6">
+                    <select class="form-control m-bot15" name="spid">
+                        <option value="0">请选择供应商</option>
+                        <foreach name="supply_list" item="row">
+                            <option value="{$row['spid']}">{$row['spname']}</option>
+                        </foreach>
+                        
+                    </select>
+                    <p class="help-block">请选择供应商</p>
+                </div>
+            </div>
+            <div class="form-group has-error">
+                <label class="col-lg-2 control-label" style="float:left">仓库分区</label>
+                <div class="col-md-6">
+                    <div class="input-group input-large custom-date-range">
+                       <select class="ware form-control m-bot15">
+                        <option value="">请选择仓库</option>
+                        <foreach name="ware_list" item="row">
+                            <option value="{$row['wid']}">{$row['wname']}</option>
+                        </foreach>
+                    </select>
+                        <span class="input-group-addon"><i class="fa fa-arrow-circle-right"></i></span>
+                       <select class="zone form-control m-bot15" name="zid">
+                        <option value="0">请选择仓库分区</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group has-info">
+                 <label class="col-lg-2 control-label" style="float:left">货物类型</label>
+                <div class="col-lg-6">
+                    <select class="form-control m-bot15" name="status">
+                        <option value="0">正常</option>
+                        <option value="1">退货</option> 
+                    </select>
+                    <p class="help-block">请选择货物类型</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <button class="btn btn-success" type="submit">新增</button>
+                    <button class="btn btn-warning" type="reset">取消</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+             $(document).on('change',".ware",function(){
+                var wid = $(this).val();
+                 $.ajax({
+                    url:'__MODULE__/equip/ajaxWare',
+                    data:{wid:wid},
+                    async:false,
+                    type:'post',
+                    dataType:'json',
+                    success:
+                    function(data){
+                        $('.zone').children().remove();
+                        $(".zone").append('<option value="">请选择仓库分区</option>');
+                        for(var i=0;i<data.length;i++){
+                            var info = '<option id="zone'+i+'" value="'+data[i].zid+'" style="width:348px;">'+data[i].zname+'</option>';
+                            $(".zone").append(info);
+                        }
+                    },
+                    error:
+                    function(){
+                        alert('响应失败');
+                    }
+                    })
+             })
+       </script>
+       
+        <!--body wrapper end-->
+</block>

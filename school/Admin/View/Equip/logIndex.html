@@ -1,0 +1,76 @@
+ <extend name="Public:Public" />
+ <block name="title">设备启动日志列表</block>
+ <block name="body">
+ <script src="__PUBLIC__/Admin/include/js/jquery-1.10.2.min.js"></script>
+ <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 设备启动日志列表 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    设备启动日志列表
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    <!-- <a href="javascript:;" class="fa fa-times"></a> -->
+                 </span>
+                </header>
+                <div class="panel-body">
+                    <div class="dataTables_filter" id="editable-sample_filter">
+                        <form action="__URL__/logIndex">
+                            <label style="float:right"> 
+                                <select name="operate" style="height:33px">
+                                    <option value="2">--请选择状态--</option>
+                                    <option value="0" <if condition="$operate eq 0"> selected </if>>关闭</option>
+                                    <option value="1" <if condition="$operate eq 1"> selected </if>>开启</option>
+                                </select>
+                                <input type="hidden" name="equip_id" value="{$equip_id}">
+                                <button class="btn btn-success" type="submit" style="float:right">搜索</button>
+                            </label>
+                        </form>
+                    </div>
+                    <table class="table table-hover general-table">
+                        
+                        <thead>
+                        <tr>
+                            <th>分区名</th>
+                            <th>设备名</th>
+                            <th>开启(关闭)</th>
+                            <th>原因</th>
+                            <th style="width:200px">时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                     <foreach name="list" item="row">
+                        <tr>
+                            <td>{$row['zname']}</td>
+                            <td>{$row['equip_name']}</td>
+                            <td>{$status[$row['operate']]}</td>
+                            <td>{$row['reason']}</td>
+                            <td>{$row['time']|date='Y-m-d H:i:s',###}</td>
+                            
+                        </tr>
+                    </foreach>
+
+                        </tbody>
+                        
+                    </table>
+                    <div class="pages pull-right">{$page}<div/>
+                </div>
+            </section>
+        </div>
+       
+        <!--body wrapper end-->
+         
+</block>

@@ -1,0 +1,54 @@
+ <extend name="Public:Public" />
+ <block name="title">添加子级</block>
+ <block name="body">
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 添加子级 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+      
+    <div class="panel-body">
+        <form role="form" class="form-horizontal adminex-form" method="post" action="__URL__/addChild">
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label" style="float:left">父级名</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="pid" id="l-name" class="form-control" type="hidden" value="{$info['cid']}">
+                    <input placeholder=""  id="l-name" class="form-control" type="text" value="{$info['cname']}" readonly>
+                </div>
+            </div>
+            <div class="form-group has-success">
+                <label class="col-lg-2 control-label" style="float:left">分类名</label>
+                <div class="col-lg-6 ">
+                    <input placeholder="" name="cname" id="l-name" class="form-control" type="text">
+                    <p class="help-block">请输入货物分类名</p>
+                </div>
+            </div>
+            <div class="form-group has-warning">
+                 <label class="col-lg-2 control-label" style="float:left"> 描述 </label>
+                <div class="col-lg-6">
+                    <textarea class="form-control " id="ccomment" name="desc" required=""></textarea>
+                    <p class="help-block">请输入分类的描述</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <button class="btn btn-success" type="submit">新增</button>
+                    <button class="btn btn-warning" type="reset">取消</button>
+                </div>
+            </div>
+        </form>
+    </div>
+       
+        <!--body wrapper end-->
+</block>

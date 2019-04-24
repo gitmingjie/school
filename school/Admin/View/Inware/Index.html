@@ -1,0 +1,104 @@
+ <extend name="Public:Public" />
+ <block name="title">入库记录列表</block>
+ <block name="body">
+ <script src="__PUBLIC__/Admin/include/js/jquery-1.10.2.min.js"></script>
+ <script language="javascript" type="text/javascript" src="__PUBLIC__/Admin/include/js/My97DatePicker/WdatePicker.js"></script>
+ <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+                智能仓储管理
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="__APP__/Admin/index/index">管理首页</a>
+                </li>
+                <li class="active"> 入库记录列表 </li>
+            </ul>
+            
+        </div>
+        <!-- page heading end-->
+        <!--body wrapper start-->
+        <div class="col-sm-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    入库记录列表
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                    <!-- <a href="javascript:;" class="fa fa-times"></a> -->
+                 </span>
+                </header>
+                <div class="panel-body">
+                    <div class="dataTables_filter" id="editable-sample_filter">
+                        <form action="__MODULE__/inware">
+                            <label style="float:right"> 
+                            	<select name="pass_status" style="height:33px">
+                                    <option value="0">--请选择类型--</option>
+                                    <option value="1" <if condition="$pass_status eq 1"> selected </if>>通过</option>
+                                    <option value="2" <if condition="$pass_status eq 2"> selected </if>>未通过</option>
+                                </select>
+                                <input class="Wdate" type="text" name="start_time" placeholder="请选择起始日期" onClick="WdatePicker()" id="start" style="width:120px;height:35px;" value="{$Think.get.start_time}" readonly>--
+								<input class="Wdate" type="text" name="end_time" placeholder="请选择结束日期" onClick="WdatePicker()" id="end_time" style="width:120px;height:35px;" value="{$Think.get.end_time}" readonly>
+                                <button class="btn btn-success" type="submit" style="float:right">搜索</button>
+                            </label>
+                        </form>
+                    </div>
+                    <table class="table table-hover general-table">
+                        
+                        <thead>
+                        <tr>
+                            <th>货物名</th>
+                            <th>货物编码</th>
+                            <th>负责人</th>
+                            <th>审核类型</th>
+                            <th style="width:200px">通过时间</th>
+                            
+                        </tr>
+                        </thead>
+                        <tbody>
+                     <foreach name="list" item="row">
+                        <tr>
+                            <td>{$row['gname']}</td>
+                            <td>{$row[code]}</td>
+                            <td>{$row['admin_name']}</td>
+                            <td>{$status[$row['pass_status']]}</td>
+                            <td>{$row['pass_time']|date='Y-m-d H:i:s',###}</td>
+                            
+                        </tr>
+                    </foreach>
+
+                        </tbody>
+                        
+                    </table>
+                    <div class="pages pull-right">{$page}<div/>
+                </div>
+            </section>
+        </div>
+       
+        <!--body wrapper end-->
+         <script type="text/javascript">
+            $(document).on('click','.del',function(){
+                var spid=$(this).val();
+                // alert(spid);
+                var res = confirm('您确定删除该客户信息？');
+                if(res){
+                     $.ajax({
+                        url:'__URL__/delSupply',
+                        data:{spid:spid},
+                        type:'post',
+                        async:false,
+                        dataType:'Json',
+                        success:
+                            function($data){
+                                if($data == 1){
+                                    alert('删除成功');
+                                    location.reload();
+                                }else{
+                                    alert('删除失败');
+                                }
+                        }   
+                    })
+                }
+               
+            })
+        </script>
+</block>
