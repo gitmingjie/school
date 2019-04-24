@@ -20,7 +20,7 @@ define('APP_DEBUG',True);
 // 定义应用目录
 // define('APP_PATH','./Application/');
 // 定义应用目录
-define('APP_PATH','./application/');
+define('APP_PATH','./school/');
 //微信
 define('APPID','wx79093e9d5b8842fa');
 define('APPSECRET','866c5212a24b564b6190bf87042f014a');
