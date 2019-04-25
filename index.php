@@ -18,9 +18,9 @@ if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 define('APP_DEBUG',True);
 
 // 定义应用目录
-// define('APP_PATH','./Application/');
+define('APP_PATH','./Application/');
 // 定义应用目录
-define('APP_PATH','./school/');
+// define('APP_PATH','./school/');
 //微信
 define('APPID','wx79093e9d5b8842fa');
 define('APPSECRET','866c5212a24b564b6190bf87042f014a');
